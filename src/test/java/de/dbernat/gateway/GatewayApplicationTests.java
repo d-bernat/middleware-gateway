@@ -11,7 +11,6 @@ class GatewayApplicationTests {
 
 	@Test
 	void contextLoads() {
-		assertTrue("fail forever", false);
 	}
 
 }
