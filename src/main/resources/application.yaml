@@ -1,0 +1,30 @@
+server:
+  port: 7070
+  error:
+    whitelabel:
+      enabled: false
+
+management:
+  server:
+    port: 17070
+    address: 127.0.0.1
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+    enabled-by-default: true
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+  health:
+    defaults:
+      enabled: true
+
+info:
+  app:
+    name: '@project.build.finalName@'
+    version: '@project.version@'
+    encoding: '@project.build.sourceEncoding@'
+    java:
+      version: '@java.version@'
