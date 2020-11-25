@@ -10,7 +10,7 @@ class AliveControllerTest
 {
     @Test
     void justForCiTest(){
-        assertEquals(3,4);
+        assertEquals(4,4);
     }
 
 }
