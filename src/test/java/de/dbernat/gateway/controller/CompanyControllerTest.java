@@ -3,21 +3,24 @@ package de.dbernat.gateway.controller;
 import de.dbernat.gateway.domain.Company;
 import de.dbernat.gateway.repositories.CompanyRepository;
 import de.dbernat.gateway.services.CompanyService;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.Assert;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
 import org.mockito.Mockito;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
 
-public class CompanyControllerTest
+
+class CompanyControllerTest
 {
+
     private WebTestClient webTestClient;
     private CompanyRepository companyRepository;
     private CompanyService companyService;
     private CompanyController companyController;
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception
     {
         companyRepository = Mockito.mock(CompanyRepository.class);
@@ -29,6 +32,7 @@ public class CompanyControllerTest
     @Test
     public void getById()
     {
+        //Arrange
         BDDMockito.given(companyRepository.findById("1"))
                   .willReturn(Mono.just(Company.builder()
                                                .id("1")
@@ -41,9 +45,12 @@ public class CompanyControllerTest
                                                .street("Bekstr. 11")
                                                .phone1("+491722865677")
                                                .build()));
-        webTestClient.get().uri("/company")
+        //Act
+        Company company = webTestClient.get().uri("/company")
                      .exchange()
-                     .expectBody(Company.class)
-                     .value(c -> c.getCity().equals("Wedel"));
+                     .expectBody(Company.class).returnResult().getResponseBody();
+        //Assert
+        Assert.assertNotNull(company);
+        Assert.assertEquals(company.getCity(), "Wedel");
     }
 }
